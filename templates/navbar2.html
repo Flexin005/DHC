@@ -1,0 +1,95 @@
+<div class="wrapper bg-dark">
+
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            {% if request.user.is_authenticated %}
+            <h1 style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 40px;">Welcome
+                {{request.user.first_name}}</h1>
+            {% else %}
+            <h1 style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 40px;">Menu</h1>
+            {% endif %}
+        </div>
+        <ul class="lisst-unstyled components">
+            {% if request.user.is_authenticated %}
+            <li class="active bg-dark">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                    style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;">Menu</a>
+                <ul class="collapse lisst-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="{% url 'dashboard' %}"
+                            style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"><i
+                                class="fas fa-user"></i>
+                            <b>Dashboard</b></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'cart_detail' %}"
+                            style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"><i
+                                class="fas fa-cart-plus"></i> <b>({{ item_count }})</b></a>
+                    </li>
+                    <li>
+                        <a href="javascript:{document.getElementById('logout').submit()}"
+                            style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"><i
+                                class="fas fa-sign-out-alt"></i>
+                            <b>Logout</b></a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                    style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;">Categories</a>
+                <ul class="collapse lisst-unstyled" id="homeSubmenu">
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{% url 'home' %}"><b>Featured</b></a>
+                    </li>
+                    {% for category in links %}
+                    <li>
+                        <a href="{{category.get_url}}"
+                            style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;">
+                            {{ category.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% else %}
+            <li class="active">
+                <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 20px;"
+                    href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
+                <ul class="collapse lisst-unstyled" id="homeSubmenu">
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{% url 'cart_detail' %}"><i class="fas fa-cart-plus"></i>
+                            <b>({{ item_count }})</b></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="active">
+                <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" href="#homeSubmenu"
+                    data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Categories</a>
+                <ul class="collapse lisst-unstyled" id="homeSubmenu">
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{% url 'home' %}"><b>Featured</b></a>
+                    </li>
+                    {% for category in links %}
+                    <li>
+                        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;"
+                            href="{{category.get_url}}"> <b>{{ category.name }}</b></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>

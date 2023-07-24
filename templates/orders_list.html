@@ -1,0 +1,42 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="text-center">
+    <br>
+    <h1 style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 25px;" class="text-center">
+        Order History
+    </h1>
+    <br>
+    <p><b>Note that we will delete very old orders made by you</b></p>
+    <br>
+    {% if order_details %}
+    <table style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="table table-striped bg-warning">
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Order Date</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_details %}
+            <tr>
+                <th>{{ order.id }}</th>
+                <th>{{ order.created|date:"d M Y" }}</th>
+                <th>₹{{ order.total }}</th>
+                <th><i class="fas fa-check"></i>&nbsp;Complete</th>
+                <th><a style="text-decoration: none;" href="{% url 'order_detail' order.id %}">View Order</a></th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have not placed any orders yet</p>
+    {% endif %}
+</div>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Thank You
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="alert alert-success" role="alert">
+        Your order has been placed!
+    </div>
+    <br>
+    <br>
+    <h1 style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 25px;" class="text-center">
+        Thanks for placing your order
+    </h1>
+    <br>
+    <br>
+    <p>Your order number is: <b>{{customer_order.id}}</b></p>
+    <br>
+    <p>
+        We have received your order and will begin processing right away, for your records and email confirmation
+        have been sent to you.
+        It contains details of the item you purchased.
+    </p>
+    Check your <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-dark">dashboard</button></a> for more information about your order.
+</div>
+{% endblock %}

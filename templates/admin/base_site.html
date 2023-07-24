@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block branding %}
+<h1 id="head">
+    <img width="100" src="{% static 'img/DHC_logo.png' %}" alt="DHC" class="brand_img"> Divyasri Hardware Collections Admin Area
+</h1>
+{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}

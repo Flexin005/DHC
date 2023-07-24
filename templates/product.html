@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Product
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mt-5">
+        <div align="center" class="col-10 mx-auto col-md-6 my-4">
+            {% if product.image_url %}
+            <img style="background-color: white;" width="300" height="300" src="{{product.image_url}}" alt="">
+            {% elif product.image %}
+            <img style="background-color: white;" width="300" height="300" src="{{product.image.url}}" alt="">
+            {% endif %}
+        </div>
+        <div class="col-10 mx-auto col-md-6 my-3">
+            <h1 class="product_title">{{product.name}}</h1>
+            {% if product.best_seller %}
+            <br>
+            <span class="badge badge-warning">BEST SELLER</span>
+            {% endif %}
+            <br>
+            {% if product.discount and product.stock > 0 %}
+            <span class="badge badge-danger">{{ product.discounted_percentage }}</span>
+            <br>
+            {% endif %}
+            <br>
+            <h5 class="text-info font-italic mb-3">
+                {% if product.discount and product.stock > 0 %}
+                <span class="mr-1"><s style="font-size: 15px;">₹</span> {{ product.price }}</s> <span
+                    class="mr-1">₹</span>
+                {{ product.discounted_price }}
+                {% else %}
+                <span class="mr-1">₹</span> {{ product.price }}
+                {% endif %}
+            </h5>
+            <br>
+            {% if product.description %}
+            <p class="text-justify product_text">{{product.description}}</p>
+            {% else %}
+            <p class="text-justify product_text">(No Description)</p>
+            {% endif %}
+            <br>
+            {% if product.stock <= 0 %}
+            <p class="text-justify product_text badge badge-danger"><b>Out of Stock</b></p>
+            {% elif product.stock <= 3 and product.stock > 0%}
+            <p class="text-justify product_text"><b>Only {{product.stock}} in stock hurry up to get it first</b></p>
+            <br>
+            <a href="{% url 'add_cart' product.id %}">
+                <br>
+                <button type="button" name="button" class="btn btn-dark btn-block">
+                    Add to Cart
+                </button>
+            </a>
+            {% else %}
+            <p class="text-justify product_text"><b>{{product.stock}} in stock</b></p>
+            <br>
+            <a href="{% url 'add_cart' product.id %}">
+                <button type="button" name="button" class="btn btn-dark btn-block">
+                    Add to Cart
+                </button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h4>Reviews</h4>
+            {% if not request.user.is_authenticated %}
+            <h6>Wish to Post a Review <a href="{% url 'login' %}"><button type="button"
+                        class="btn btn-dark">Login</button></a></h6>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea name="content" placeholder="Post your Review. We would love to see it!"
+                        class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block">Post</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if reviews.count > 0 %}
+        <ul class="list-group list-group-flush">
+            {% for review in reviews %}
+            <li class="list-group-item">
+                <h5>{{ review.user.username }}</h5>
+                <p class="card-text">{{ review.content }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

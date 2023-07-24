@@ -1,0 +1,69 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <button id="sidebarCollapse" type="button" class="btn btn-warning"><img width="100"
+        src="{% static 'img/DHC_logo.png' %}"></button>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-link"
+          href="{% url 'home' %}">Featured Products</a>
+      </li>
+      <li class="nav-item active">
+        <a style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-link"
+          href="{% url 'about' %}">About us</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'cart_detail' %}" tabindex="-1" aria-disabled="true"><i
+            class="fas fa-cart-plus"></i> <b>({{ item_count }})</b></a>
+      </li>
+      {% if user.is_authenticated %}
+      <li style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-item active mr-3"
+        class="nav-item mr-1">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          Welcome {{ user.first_name }}</a>
+      </li>
+      <li style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-item active mr-1">
+        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        <form action="{% url 'logout' %}" method="POST" id="logout">
+          {% csrf_token %}
+          <input type="hidden">
+        </form>
+      </li>
+      {% else %}
+      <li style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-item active mr-3"
+        class="nav-item mr-1">
+        <a class="nav-link" href="{% url 'register' %}">
+          <i class="fas fa-user-plus"></i> Register</a>
+      </li>
+      <li style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;" class="nav-item active mr-3"
+        class="nav-item mr-1">
+        <a class="nav-link" href="{% url 'login' %}">
+          <i class="fas fa-sign-in-alt"></i>
+          Login</a>
+      </li>
+      {% endif %}
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="{% url 'searchResult' %}" method="get">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+      <button class="btn btn-dark my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div>
+</nav>
+
+<!--Javascript for sidebar-->
+<script>
+  $("#menu-toggle").click(function (e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("menuDisplayed");
+  });
+</script>

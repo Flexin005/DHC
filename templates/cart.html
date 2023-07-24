@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Cart
+{% endblock %}
+
+{% block content %}
+{% if not cart_items %}
+<div class="text-center">
+    <br>
+    <br>
+    <img width="100px" src="{% static 'img/cart-empty.png' %}" alt="">
+    <h1 style="text-transform: uppercase; letter-spacing: .2em; font-size: 25px; padding-top: 40px;"
+        class="text-center">
+        Your Shopping Cart is Empty
+    </h1>
+    <br>
+    <p class="text-center">
+    <p>If you are a new customer and placed an order for the first time your cart automatically becomes empty.</p>
+    {% if request.user.is_authenticated %}
+    <p>To conform your orders check your <a href="{% url 'dashboard' %}">order history</a></p>
+    {% else %}
+    <p>Please <a href="{% url 'register' %}">signup</a> if you are a new customer to check your order history.</p>
+    <p><strong>NOTE:</strong> Your order what you
+        placed as a guest
+        user will not be visible in your order history</p>
+    {% endif %}
+    <p><a href="{% url 'home' %}"><button type="button" class="btn btn-dark">Continue Shopping</button></a></p>
+</div>
+{% else %}
+<div class="text-center">
+    <br>
+    <div style="text-transform: uppercase; letter-spacing: .2em; font-size: 25px;" class="text-center">
+        Your Shopping Cart
+        <br>
+        <br>
+    </div>
+</div>
+<div class="row mx-auto">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <table class="table">
+            <thead class="bg-warning">
+                <tr>
+                    <th colspan="4">
+                        Your items
+                    </th>
+                </tr>
+            </thead>
+            {% for cart_item in cart_items %}
+            <tr>
+                <td>
+                    <a href="{{cart_item.product.get_url}}">
+                        {% if cart_item.product.image_url %}
+                        <img width="100" height="100" src="{{cart_item.product.image_url}}" alt="">
+                        {% elif cart_item.product.image %}
+                        <img width="100" height="100" src="{{cart_item.product.image.url}}" alt="">
+                        {% endif %}
+                    </a>
+                </td>
+                <td class="text-left">
+                    {{cart_item.product.name}}
+                    <br>
+                    SKU: {{cart_item.product.id}}
+                    <br>
+                    Unit Price:
+                    {% if cart_item.product.discount %}
+                    <span class="mr-1">₹</span>
+                    {{ cart_item.product.discounted_price }}
+                    {% else %}
+                    <span class="mr-1">₹</span> {{ product.price }}
+                    {% endif %}
+                    <br>
+                    {% if cart_item.product.discount %}
+                    Qty: {{cart_item.quantity}} x {{cart_item.product.discounted_price}}
+                    {% else %}
+                    Qty: {{cart_item.quantity}} x {{cart_item.product.price}}
+                    {% endif %}
+                </td>
+                <td>
+                    ₹{{cart_item.sub_total}}
+                </td>
+                {% if cart_item.quantity < cart_item.product.stock %}
+                <td>
+                    &nbsp;<a href="{% url 'add_cart' cart_item.product.id %}"><i class="fas fa-plus-circle"></i></a>
+                    &nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}"><i class="fas fa-minus-circle"></i></a>
+                    &nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}"><i
+                            class="fas fa-trash-alt"></i></a>
+
+
+                </td>
+                {% else %}
+                <td>
+                    &nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}"><i class="fas fa-minus-circle"></i></a>
+                    &nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}"><i
+                            class="fas fa-trash-alt"></i></a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <table class="table">
+            <thead class="bg-warning">
+                <tr>
+                    <th>
+                        Check Out
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Please review your cart items before proceeding with the payment
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        Your Total is: <strong>₹{{total}}</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mx-auto">
+            <form class="" action="" method="POST">
+                {% csrf_token %}
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ data_key }}"
+                    data-amount="{{ stripe_total }}" data-name="Divyasri Hardware Collections"
+                    data-description="{{ description }}" data-locale="auto" data-currency="INR"
+                    data-shipping-address="true" data-billing-address="true" data-zip-code="true"
+                    data-image="{% static 'img/DHC_logo.png' %}">
+                    </script>
+            </form>
+            <a href="{% url 'home' %}" style="text-decoration: none;">
+                <button type="button" class="btn btn-lg btn-block bg-dark text-white">
+                    Continue Shopping
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+<br>
+<br>
+{% endblock %}

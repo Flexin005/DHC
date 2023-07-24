@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+We have a variety of Household Collections that will make your house beautiful. Look for the one that suits your home.
+{% endblock %}
+{% block title %}
+Search
+{% endblock %}
+{% block content %}
+<div>
+    <p style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 25px;" class="text-center">
+        You Have Searched for: <b>"{{ query }}"</b></p>
+</div>
+<div class="container">
+    <div class="row match-to-row">
+        {% for product in products %}
+        <div class="col-9 mx-auto col-md-6 col-lg-4">
+            <div class="card mb-3" style="border-color:transparent;">
+                <div class="p-4">
+                    {% if product.best_seller %}
+                    <span class="badge badge-warning">BEST SELLER</span>
+                    {% endif %}
+                    <br>
+                    {% if product.discount and product.stock > 0 %}
+                    <span class="badge badge-danger">{{ product.discounted_percentage }}</span>
+                    {% endif %}
+                    <br>
+                    {% if product.stock <= 0 %}
+                    <span class="badge badge-danger">Out of Stock</span>
+                    {% endif %}
+                    <br>
+                    <br>
+                    <a href="{{ product.get_url }}">
+                        {% if product.image_url %}
+                        <img style="width: 250px;" height="200" src="{{ product.image_url }}" class="card-img-top"
+                            alt="Handle Sample">
+                        {% elif product.image %}
+                        <img style="width: 250px;" height="200" src="{{product.image.url}}" class="card-img-top"
+                            alt="Handle Sample">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="card-footer d-flex justify-content-between"
+                    style="background:transparent; border-color:transparent">
+                    <p class="font-weight-bold mb-0">
+                        {{ product.name }}
+                    </p>
+                    <h5 class="card-text text-info font-italic mb-0">
+                        {% if product.discount and product.stock > 0 %}
+                        <span class="mr-1"><s style="font-size: 12px;">₹</span> {{ product.price }}</s>
+                         <p><span class="mr-1">₹</span> {{ product.discounted_price }}</p>
+                        {% else %}
+                        <span class="mr-1">₹</span> {{ product.price }}
+                        {% endif %}
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <br>
+        <br>
+        <br>
+        <div class="mx-auto text-center">
+            <p><img width="100" src="{% static 'img/search-failed.webp' %}" alt=""></p>
+            <p style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold; font-size: 20px;"
+                class="text-center">Oops! 0 results found</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}

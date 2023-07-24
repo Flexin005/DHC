@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center" style="text-transform: uppercase; letter-spacing: .2em; font-weight: bold;">Divyasri Hardware
+    Collections</h1>
+<br>
+<div class="container py-5">
+    <div class="row mt-5">
+        <div align="center" class="col-10 mx-auto col-md-6 my-4">
+            <img src="{% static 'img/DHC2.jpg' %}" alt="">
+        </div>
+        <div class="col-10 mx-auto col-md-6 my-3">
+            <h1 class="product_title">About Divyasri Hardware Collections</h1>
+            <br>
+            <p><strong>Address:</strong> Shop No. 15-2-706, 707, Beside Government Boys High School, Mumbai Highway,
+                Siddiamber Bazar Rd, Siddiamber Bazar, Hyderabad, Telangana 500012</p>
+            <br>
+            <p><strong>Phone: </strong>98480 75305 or 98856 66237</p>
+            <br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquet gravida enim. Morbi condimentum magna
+                ut mattis pretium. Nunc nec leo mollis, tincidunt lorem eget, malesuada quam. Mauris pharetra dolor
+                felis, nec imperdiet velit iaculis vel. Aliquam erat volutpat. Suspendisse vel massa viverra, pulvinar
+                sapien ut, volutpat tortor. Donec ut blandit dolor. Pellentesque non est nec justo tincidunt vulputate.
+                Nulla ut ligula dapibus, pulvinar felis a, tincidunt dolor. Mauris posuere sagittis quam, non finibus
+                libero elementum vitae. Nulla eu dui bibendum, condimentum nibh eget, bibendum nunc. Sed condimentum
+                aliquam nisi, sed ornare nunc. Vestibulum ac ullamcorper felis. Ut tincidunt, erat nec bibendum gravida,
+                odio elit fermentum ex, a pharetra elit turpis eget eros.</p>
+
+            <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean cursus
+                dui eros. Vivamus eu sapien gravida, egestas leo nec, aliquet felis. Vivamus sollicitudin purus id
+                ultrices blandit. Quisque accumsan nec odio id malesuada. Aliquam iaculis arcu tortor. Integer porta
+                hendrerit felis quis malesuada. Nulla dapibus rutrum justo id sagittis. Quisque id lorem pharetra,
+                dictum arcu vitae, tristique ligula. Vivamus viverra, sapien viverra facilisis commodo, purus felis
+                dictum arcu, id pellentesque est mi et dui. Sed luctus vitae augue id facilisis. Integer venenatis arcu
+                nunc, ut congue turpis sollicitudin non. Mauris ut metus ac neque pharetra pulvinar. Nulla facilisi.
+                Curabitur elementum facilisis enim a mollis. Fusce dignissim, dolor et suscipit imperdiet, metus dolor
+                euismod lectus, vel pellentesque nisl risus pretium sem.</p>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <div class="row mt-5">
+        <div align="center" class="col-10 mx-auto col-md-6 my-4">
+            <img src="{% static 'img/dh4.jpg' %}" alt="">
+            <br>
+            <br>
+            <br>
+            <img src="{% static 'img/dh5.webp' %}" alt="">
+        </div>
+        <div class="col-10 mx-auto col-md-6 my-3">
+            <h1 class="product_title">Our Categories</h1>
+            <p><strong>As of today we have the following categories</strong></p>
+            {% for category in links %}
+            <p><strong>{{ category.name }}: </strong>{{ category.description }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

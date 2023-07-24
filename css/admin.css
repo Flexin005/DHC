@@ -1,0 +1,61 @@
+#header {
+    height: 50px;
+    background-color: khaki;
+    color: maroon;
+}
+
+#branding h1 {
+    color: maroon;
+}
+
+a:link,
+a:visited {
+    color: maroon;
+}
+
+div.breadcrumbs {
+    background-color: goldenrod;
+    color: darkred;
+}
+
+div.breadcrumbs a {
+    color: maroon;
+}
+
+div.flex {
+    background-color: khaki;
+}
+
+#footer {
+    background-color: khaki;
+}
+
+#toolbar {
+    background-color: darkkhaki;
+}
+
+#content {
+    background-color: khaki;
+}
+
+#content h1{
+    color: maroon;
+}
+
+#container {
+    color: maroon;
+}
+
+body {
+    background-color: khaki;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background-color: darkkhaki;
+    text-decoration: none;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background-color: darkslategray;
+}
+

@@ -1,0 +1,21 @@
+.stripe-button-el {
+    width: 100% !important;
+    display: block !important;
+    background-color: grey !important;
+    border: 0px !important;
+    background-image: none !important;
+}
+.stripe-button-el span {
+    display: block;
+    position: relative;
+    padding-bottom: 50px;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 16px !important;
+    color: white !important;
+    background-image: none !important;
+    background: none !important;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
